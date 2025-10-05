@@ -42,21 +42,21 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
       <div className="container flex h-16 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AI</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-lg">P</span>
             </div>
-            <span className="hidden font-bold sm:inline-block">Pulsar Automation</span>
+            <span className="hidden font-bold sm:inline-block text-white">Pulsar Automation</span>
           </Link>
           <nav className="flex items-center space-x-6 text-sm font-medium">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className="transition-colors hover:text-white text-gray-300"
               >
                 {item.name}
               </Link>
@@ -67,16 +67,16 @@ export function Header() {
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <Link href="/" className="mr-6 flex items-center space-x-2 md:hidden">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">AI</span>
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-lg">P</span>
               </div>
-              <span className="font-bold">Pulsar Automation</span>
+              <span className="font-bold text-white">Pulsar Automation</span>
             </Link>
           </div>
           
           <nav className="flex items-center space-x-2">
             {loading ? (
-              <div className="h-8 w-20 animate-pulse bg-muted rounded"></div>
+              <div className="h-8 w-20 animate-pulse bg-gray-700 rounded"></div>
             ) : user ? (
               <>
                 <Button variant="ghost" asChild>
@@ -113,14 +113,14 @@ export function Header() {
       </div>
       
       {mobileMenuOpen && (
-        <div className="border-t bg-background md:hidden">
+        <div className="border-t border-gray-800 bg-black md:hidden">
           <div className="container py-4">
             <nav className="flex flex-col space-y-4">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-medium transition-colors hover:text-foreground/80 text-foreground/60"
+                  className="text-sm font-medium transition-colors hover:text-white text-gray-300"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}

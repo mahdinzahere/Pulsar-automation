@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       }
     } catch (parseError) {
       return NextResponse.json(
-        { error: "Failed to parse data", details: parseError.message },
+        { error: "Failed to parse data", details: parseError instanceof Error ? parseError.message : String(parseError) },
         { status: 400 }
       );
     }
