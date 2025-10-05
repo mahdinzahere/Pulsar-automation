@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  listings  Listing[]
+  mediaAssets MediaAsset[]
+  ebayTokens EbayToken[]
+  auditLogs AuditLog[]
+}
+
+model Product {
+  id         String   @id @default(cuid())
+  sku        String   @unique
+  title      String
+  brand      String?
+  cost       Decimal
+  stock      Int      @default(0)
+  images     Json     // string[]
+  categoryId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  playbook   Playbook? @relation(fields: [sku], references: [sku])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  playbooks Playbook[]
+}
+
+model Playbook {
+  id               String   @id @default(cuid())
+  productId        String   @unique
+  sku              String   @unique
+  skuPrefix        String?
+  categoryId       String?
+  tags             String[] @default([])
+  isActive         Boolean  @default(true)
+  version          Int      @default(1)
+  titleTemplate    String
+  subtitle         String?
+  bullets          Json
+  forbiddenPhrases Json
+  itemSpecifics    Json
+  priceMin         Decimal
+  priceMax         Decimal
+  shippingProfile  String
+  returnsProfile   String
+  policyGate       Json
+  imageRules       Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  category         Category? @relation(fields: [categoryId], references: [id])
+  versions         PlaybookVersion[]
+  product          Product?
+}
+
+model PlaybookVersion {
+  id         String   @id @default(cuid())
+  playbookId String
+  version    Int
+  data       Json
+  createdAt  DateTime @default(now())
+  createdBy  String?
+  playbook   Playbook @relation(fields: [playbookId], references: [id])
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  userId      String
+  url         String
+  contentType String
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model EbayToken {
+  id           String   @id @default(cuid())
+  userId       String
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  accountId    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Listing {
+  id          String         @id @default(cuid())
+  userId      String
+  productId   String
+  sku         String
+  status      ListingStatus  @default(DRAFT)
+  offerId     String?
+  itemId      String?
+  viewItemUrl String?
+  price       Decimal
+  policyNotes String?
+  draft       Json?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  user        User           @relation(fields: [userId], references: [id])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  details   Json?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+enum Role { 
+  USER 
+  MEMBER 
+  ADMIN 
+}
+
+enum ListingStatus { 
+  DRAFT 
+  PENDING_REVIEW 
+  PUBLISHED 
+  BLOCKED 
+}

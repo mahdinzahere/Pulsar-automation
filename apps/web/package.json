@@ -1,0 +1,41 @@
+{
+  "name": "pulsar-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "tsx prisma/seed.ts",
+    "migrate": "prisma migrate dev --name init",
+    "generate": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "@types/react-dom": "^19.2.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "csv-parse": "^5.5.2",
+    "csv-stringify": "^6.4.4",
+    "jose": "^5.2.0",
+    "lucide-react": "^0.544.0",
+    "next": "14.2.5",
+    "openai": "^4.67.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "^3.3.1",
+    "uuid": "^9.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.19",
+    "@types/react": "^19.2.0",
+    "prisma": "^5.18.0",
+    "tsx": "^4.15.7",
+    "typescript": "^5.4.5"
+  }
+}
